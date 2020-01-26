@@ -1,0 +1,95 @@
+version: "3"
+
+services:
+
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+
+  nginx:
+    networks:
+      flat-network:
+        aliases :
+          - cauduro.dev
+    image: nginx:1.15-alpine
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/certbot/conf:/etc/letsencrypt
+      - ./nginx/certbot/www:/var/www/certbot
+    depends_on:
+      - wp
+      - certbot
+      - nuxt
+
+  nuxt:
+    networks:
+      - flat-network
+    build:
+      context: ./app
+      dockerfile: "Dockerfile-build"
+    container_name: nuxt
+    restart: always
+    env_file: .env
+    environment:
+      BASE_URL : "${IP}/"
+    depends_on:
+      - wp
+    command:
+      "npm start"
+  
+  wp:
+    image: wordpress:latest
+    container_name: dev-wp
+    restart: always
+    depends_on:
+      - db
+    environment:
+      WORDPRESS_CONFIG_EXTRA:
+
+        define('FS_METHOD', 'direct');
+
+        define( 'WP_DEBUG', true );
+
+        define( 'WP_DEBUG_LOG', '/tmp/logs/error.log' );
+
+        define( 'WP_REDIS_HOST', 'redis' );
+
+        define( 'GRAPHQL_DEBUG', true );
+
+    env_file: .env
+    volumes:
+      - ./wordpress/wp-content:/var/www/html/wp-content
+      - ./wordpress/logs:/tmp/logs
+      - ./wordpress/wp-content/uploads/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    networks:
+      - flat-network
+
+  db:
+    image: mysql:5.7.23
+    env_file: .env
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - flat-network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    networks:
+      - flat-network
+
+networks:
+  flat-network:
