@@ -31,6 +31,8 @@ The recipe should spin up a working site with SSL. It's not very user friendly a
 
 5) Your site should spin up - nuxt takes a lot longer (~3-5 minutes) to fully load. Go to Wordpress and add a basic database at domain.name/wp-admin
 
+6) Optional - enable my wordpress plugin (caudurodev) to turn on Redis WP GraphQL query caching - you specify if you want the query cached via a unique string in the request header...
+
 For now, my nuxt theme is very proprietary, so you can check out the code to get it working, but to simplify - you will need to install advanced custome fields and setup pages that I am using to save basic data about the website as well as the WP GraphQL plugin. In the future I plan to make this step a bit more generic. If you have trouble setting this up, message me. 
 
 Performance is quite good so far - my website (still in development) appears quite fast, even without caching.
