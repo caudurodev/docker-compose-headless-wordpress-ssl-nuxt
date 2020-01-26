@@ -22,12 +22,12 @@ The recipe should spin up a working site with SSL. It's not very user friendly a
 - /app/nginx/lets.conf with your domain name
 
 3) Make init-letsencrypt.sh executable and then run it:
-$ chmod +x init-letsencrypt.sh
-$ sudo ./init-letsencrypt.sh
+```$ chmod +x init-letsencrypt.sh```
+```$ sudo ./init-letsencrypt.sh```
 
 4) You might need to restart docker containers for the previous step to work
-$ docker-compose down
-$ docker-compose up (might need --build --force-recreate)
+```$ docker-compose down```
+```$ docker-compose up (might need --build --force-recreate)```
 
 5) Your site should spin up - nuxt takes a lot longer (~3-5 minutes) to fully load. Go to Wordpress and add a basic database at domain.name/wp-admin
 
