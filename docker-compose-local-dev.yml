@@ -73,12 +73,12 @@ services:
     networks:
       - flat-network
 
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: always
-    networks:
-      - flat-network
+  # redis:
+  #   image: redis:alpine
+  #   container_name: redis
+  #   restart: always
+  #   networks:
+  #     - flat-network
 
 networks:
   flat-network:

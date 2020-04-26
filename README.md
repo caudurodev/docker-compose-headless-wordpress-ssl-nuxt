@@ -35,7 +35,7 @@ The recipe should spin up a working site with SSL. It's not very user friendly a
 
 For now, my nuxt theme is very proprietary, so you can check out the code to get it working, but to simplify - you will need to install advanced custome fields and setup pages that I am using to save basic data about the website as well as the WP GraphQL plugin. In the future I plan to make this step a bit more generic. If you have trouble setting this up, message me. 
 
-Performance is quite good so far - my website (still in development) appears quite fast, even without caching.
+Performance is quite good so far - my website (still in development) appears quite fast, even without caching or Redis connected.
 
 ## Next steps
 I plan to make this theme more generic as well as enable static generation mode for serverless.
