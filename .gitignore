@@ -21,3 +21,4 @@ wordpress/wp-content/uploads
 .vscode
 setupexplained.txt
 .env
+wordpress/wp-content/themes/*
