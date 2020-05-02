@@ -13,12 +13,8 @@ dist
 # IDE
 .idea
 
-mysql
-local.conf
-docker-compose-local.yml
-docker-compose-local-production.yml
+mysql_database
 wordpress/wp-content/uploads
 .vscode
-setupexplained.txt
 .env
 wordpress/wp-content/themes/*

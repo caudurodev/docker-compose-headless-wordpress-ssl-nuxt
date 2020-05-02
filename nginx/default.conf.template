@@ -1,0 +1,60 @@
+
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name ${DOMAIN} www.${DOMAIN};
+
+    location / {
+        proxy_set_header        X-Forwarded-Proto ${DOLLAR}scheme;
+        return 302 https://${DOMAIN}${DOLLAR}request_uri;
+    }
+
+    location /.well-known/acme-challenge/ {
+      root /var/www/certbot;
+    }
+}
+
+server {
+    listen 443 ssl;
+
+    server_name ${DOMAIN};
+
+    ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
+
+
+    proxy_redirect    off;
+
+    location ~ ^/graphql {
+
+        proxy_pass http://wp:80;
+        proxy_set_header Host ${DOLLAR}http_host;
+        proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+
+    }   
+
+    location = /wp-admin {
+        rewrite ^(.*[^/])${DOLLAR} ${DOLLAR}1/ permanent;
+    }
+
+    location ~ ^/wp([a-z-_*]) {
+      proxy_pass http://wp:80;
+      proxy_set_header Host ${DOLLAR}host;
+      proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
+      proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+    }
+
+    
+
+    location / {
+        proxy_pass http://nuxt:3000;
+        proxy_set_header Host ${DOLLAR}host;
+        proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
+    }
+
+}

@@ -13,13 +13,16 @@ services:
     networks:
       flat-network:
         aliases :
-          - cauduro.dev
+          - $$DOMAIN
     image: nginx:1.15-alpine
     container_name: nginx
     ports:
       - "80:80"
       - "443:443"
     restart: always
+    env_file: .env
+    environment:
+      - DOMAIN=$$DOMAIN
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - ./nginx:/etc/nginx/conf.d
@@ -80,7 +83,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./mysql_database/mysql:/var/lib/mysql
     networks:
       - flat-network
 
