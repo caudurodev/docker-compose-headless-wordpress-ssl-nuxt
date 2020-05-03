@@ -13,8 +13,10 @@ services:
     networks:
       flat-network:
         aliases :
-          - $$DOMAIN
-    image: nginx:1.15-alpine
+          - "${DOMAIN}"
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
     container_name: nginx
     ports:
       - "80:80"
@@ -22,7 +24,7 @@ services:
     restart: always
     env_file: .env
     environment:
-      - DOMAIN=$$DOMAIN
+      - DOMAIN="${DOMAIN}"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - ./nginx:/etc/nginx/conf.d
