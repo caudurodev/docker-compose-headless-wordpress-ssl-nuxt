@@ -13,8 +13,6 @@ dist
 # IDE
 .idea
 
-mysql_database
-wordpress/wp-content/uploads
-.vscode
 .env
-wordpress/wp-content/themes/*
+mysql_database
+.vscode
