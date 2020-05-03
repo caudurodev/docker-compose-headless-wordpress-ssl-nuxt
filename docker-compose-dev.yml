@@ -6,7 +6,9 @@ services:
       flat-network:
         aliases :
           - localhost
-    image: nginx:1.15-alpine
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
     container_name: dev-nginx
     ports:
       - "80:80"
@@ -15,26 +17,10 @@ services:
       - ./nginx/local-dev/:/etc/nginx/conf.d
     depends_on:
       - wp
-      # - nuxt
-
-  # nuxt:
-  #   networks:
-  #     - flat-network
-  #   build:
-  #     context: ./app
-  #     dockerfile: Dockerfile-dev
-  #   container_name: dev-nuxt
-  #   restart: always
-  #   env_file: .env
-  #   environment:
-  #     BASE_URL : "${IP}/"
-  #   volumes:
-  #       - ./app:/app
-  #       # - /app/node_modules/
-  #   depends_on:
-  #     - wp
-  #   command:
-  #     "npm run dev"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d > /etc/nginx/conf.d && nginx -g 'daemon off;'" 
 
   wp:
     image: wordpress:latest

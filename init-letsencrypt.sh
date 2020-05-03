@@ -1,9 +1,10 @@
 #!/bin/bash
-
-domains=(cauduro.dev)
+DOMAINS=$(grep DOMAIN .env | cut -d '=' -f2)
+domains=(DOMAINS)
 rsa_key_size=4096
 data_path="./nginx/certbot"
-email="rod@cauduro.dev" # Adding a valid address is strongly recommended
+EMAIL=$(grep EMAIL .env | cut -d '=' -f2)
+email="EMAIL" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then

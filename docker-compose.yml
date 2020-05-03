@@ -13,7 +13,7 @@ services:
     networks:
       flat-network:
         aliases :
-          - cauduro.dev
+          - eutueles.com
     image: nginx:1.15-alpine
     container_name: nginx
     ports:
@@ -28,24 +28,12 @@ services:
     depends_on:
       - wp
       - certbot
-      - nuxt
-
-  nuxt:
-    networks:
-      - flat-network
-    build:
-      context: ./app
-      dockerfile: "Dockerfile-build"
-    container_name: nuxt
-    restart: always
-    env_file: .env
     environment:
-      BASE_URL : "${IP}/"
-    depends_on:
-      - wp
-    command:
-      "npm start"
-  
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    command: /bin/bash -c "envsubst < /etc/nginx/conf.d/mysite.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'" 
+       
+
   wp:
     image: wordpress:latest
     container_name: dev-wp
@@ -84,12 +72,6 @@ services:
     networks:
       - flat-network
 
-  redis:
-    image: redis:alpine
-    container_name: redis
-    restart: always
-    networks:
-      - flat-network
 
 networks:
   flat-network:

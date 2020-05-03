@@ -1,24 +1,4 @@
-# dependencies
-node_modules
-
-# logs
-npm-debug.log
-
-# Nuxt build
-.nuxt
-
-# Nuxt generate
-dist
-
-# IDE
-.idea
-
 mysql
 local.conf
-docker-compose-local.yml
-docker-compose-local-production.yml
-wordpress/wp-content/uploads
 .vscode
-setupexplained.txt
 .env
-wordpress/wp-content/themes/*
