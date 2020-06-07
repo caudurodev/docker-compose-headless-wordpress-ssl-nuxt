@@ -6,9 +6,7 @@ services:
       flat-network:
         aliases :
           - localhost
-    build: 
-      context: .
-      dockerfile: ./nginx/Dockerfile
+    image: nginx:1.15-alpine
     container_name: dev-nginx
     ports:
       - "80:80"
@@ -17,11 +15,6 @@ services:
       - ./nginx/local-dev/:/etc/nginx/conf.d
     depends_on:
       - wp
-    environment:
-      - NGINX_HOST=foobar.com
-      - NGINX_PORT=80
-    command: /bin/bash -c "envsubst < /etc/nginx/conf.d > /etc/nginx/conf.d && nginx -g 'daemon off;'" 
-
   wp:
     image: wordpress:latest
     container_name: dev-wp
