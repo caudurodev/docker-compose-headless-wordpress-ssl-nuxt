@@ -13,13 +13,23 @@ services:
     networks:
       flat-network:
         aliases :
+<<<<<<< HEAD:docker-compose.yml
           - eutueles.com
     image: nginx:1.15-alpine
+=======
+          - "${DOMAIN}"
+    build: 
+      context: .
+      dockerfile: ./nginx/Dockerfile
+>>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99:docker-compose-remote-production.yml
     container_name: nginx
     ports:
       - "80:80"
       - "443:443"
     restart: always
+    env_file: .env
+    environment:
+      - DOMAIN="${DOMAIN}"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
       - ./nginx:/etc/nginx/conf.d
@@ -68,7 +78,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - ./mysql_database/mysql:/var/lib/mysql
     networks:
       - flat-network
 

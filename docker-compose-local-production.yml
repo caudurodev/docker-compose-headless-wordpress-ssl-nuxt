@@ -7,14 +7,34 @@ services:
         aliases :
           - localhost
     image: nginx:1.15-alpine
-    container_name: dev-nginx
+    container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     restart: always
     volumes:
-      - ./nginx/local-dev/:/etc/nginx/conf.d
+      - ./nginx/local-production/:/etc/nginx/conf.d
     depends_on:
       - wp
+      - nuxt
+
+  nuxt:
+    networks:
+      - flat-network
+    build:
+      context: ./app
+      dockerfile: Dockerfile-build
+    container_name: nuxt
+    restart: always
+    env_file: .env
+    environment:
+      BASE_URL : "${IP}/"
+      IP : "${IP}"
+    depends_on:
+      - wp
+    command:
+      "npm start"
+
   wp:
     image: wordpress:latest
     container_name: dev-wp
@@ -31,7 +51,6 @@ services:
         define( 'WP_DEBUG_LOG', '/tmp/logs' );
 
         define( 'WP_REDIS_HOST', 'redis' );
-
     env_file: .env
     volumes:
       - ./wordpress/wp-content:/var/www/html/wp-content
@@ -39,7 +58,7 @@ services:
       - ./wordpress/wp-content/uploads/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - flat-network
-
+  
   db:
     image: mysql:5.7.23
     env_file: .env
@@ -50,6 +69,7 @@ services:
       - ./mysql_database/mysql:/var/lib/mysql
     networks:
       - flat-network
+
   # redis:
   #   image: redis:alpine
   #   container_name: redis

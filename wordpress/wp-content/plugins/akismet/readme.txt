@@ -1,9 +1,15 @@
 === Akismet Anti-Spam ===
 Contributors: matt, ryan, andy, mdawaffe, tellyworth, josephscott, lessbloat, eoigal, cfinke, automattic, jgs, procifer, stephdau
 Tags: akismet, comments, spam, antispam, anti-spam, anti spam, comment moderation, comment spam, contact form spam, spam comments
+<<<<<<< HEAD
 Requires at least: 4.6
 Tested up to: 5.4
 Stable tag: 4.1.6
+=======
+Requires at least: 4.0
+Tested up to: 5.2
+Stable tag: 4.1.2
+>>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99
 License: GPLv2 or later
 
 Akismet checks your comments and contact form submissions against our global database of spam to protect you and your site from malicious content.
@@ -20,16 +26,17 @@ Major features in Akismet include:
 * Moderators can see the number of approved comments for each user.
 * A discard feature that outright blocks the worst spam, saving you disk space and speeding up your site.
 
-PS: You'll be prompted to get an Akismet.com API key to use it, once activated. Keys are free for personal blogs; paid subscriptions are available for businesses and commercial sites.
+PS: You'll need an [Akismet.com API key](https://akismet.com/get/) to use it.  Keys are free for personal blogs; paid subscriptions are available for businesses and commercial sites.
 
 == Installation ==
 
-Upload the Akismet plugin to your blog, activate it, and then enter your Akismet.com API key.
+Upload the Akismet plugin to your blog, Activate it, then enter your [Akismet.com API key](https://akismet.com/get/).
 
 1, 2, 3: You're done!
 
 == Changelog ==
 
+<<<<<<< HEAD
 = 4.1.6 =
 *Release Date - 4 June 2020*
 
@@ -60,6 +67,8 @@ Upload the Akismet plugin to your blog, activate it, and then enter your Akismet
 * Updated the plugin activation page to use consistent language and markup.
 * Redirecting users to the Akismet connnection/settings screen upon plugin activation, in an effort to make it easier for people to get setup.
 
+=======
+>>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99
 = 4.1.2 =
 *Release Date - 14 May 2019*
 

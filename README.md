@@ -10,8 +10,13 @@ Contains a local docker-compose
 - WP-GraphQL
 - WP-User-Avatar
 
-Recommended Themes
+Recommended Wordpress Themes
+
 - Nude (for Headless WP)
+
+Nuxt wordpress theme:
+
+- https://github.com/caudurodev/wordpress-nuxt-theme
 
 The recipe should spin up a working site with SSL. It's not very user friendly at the moment but I will improve it over time to make it more generic.
 

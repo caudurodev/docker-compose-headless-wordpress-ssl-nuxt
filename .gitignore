@@ -1,4 +1,25 @@
+<<<<<<< HEAD
 mysql
 local.conf
 .vscode
 .env
+=======
+# dependencies
+node_modules
+
+# logs
+npm-debug.log
+
+# Nuxt build
+.nuxt
+
+# Nuxt generate
+dist
+
+# IDE
+.idea
+
+.env
+mysql_database
+.vscode
+>>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99

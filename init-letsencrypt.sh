@@ -1,9 +1,16 @@
 #!/bin/bash
+<<<<<<< HEAD
 DOMAINS=$(grep DOMAIN .env | cut -d '=' -f2)
 domains=(DOMAINS)
 rsa_key_size=4096
 data_path="./nginx/certbot"
 EMAIL=$(grep EMAIL .env | cut -d '=' -f2)
+=======
+domains=($(grep DOMAIN .env | cut -d '=' -f2))
+rsa_key_size=4096
+data_path="./nginx/certbot"
+EMAIL=$(grep SSL_EMAIL .env | cut -d '=' -f2)
+>>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99
 email="EMAIL" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
@@ -26,7 +33,7 @@ fi
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
 mkdir -p "$data_path/conf/live/$domains"
-docker-compose -f docker-compose-remote-production.yml run --rm --entrypoint "\
+docker-compose run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:1024 -days 1\
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
@@ -35,11 +42,11 @@ echo
 
 
 echo "### Starting nginx ..."
-docker-compose -f docker-compose-remote-production.yml up --force-recreate -d nginx
+docker-compose up --force-recreate -d nginx
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
-docker-compose -f docker-compose-remote-production.yml run --rm --entrypoint "\
+docker-compose run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/$domains && \
   rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
@@ -62,7 +69,7 @@ esac
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
-docker-compose -f docker-compose-remote-production.yml run --rm --entrypoint "\
+docker-compose run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $staging_arg \
     $email_arg \
