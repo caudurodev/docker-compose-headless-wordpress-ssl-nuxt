@@ -25,11 +25,6 @@ server {
     ssl_certificate /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
 
-<<<<<<< HEAD
-    proxy_redirect    off;
-
-    location / {
-=======
 
     proxy_redirect    off;
 
@@ -48,17 +43,12 @@ server {
     }
 
     location ~ ^/wp([a-z-_*]) {
->>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99
       proxy_pass http://wp:80;
       proxy_set_header Host ${DOLLAR}host;
       proxy_set_header X-Real-IP ${DOLLAR}remote_addr;
       proxy_set_header X-Forwarded-For ${DOLLAR}proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
     }
-<<<<<<< HEAD
-    
-
-=======
 
     
 
@@ -69,5 +59,4 @@ server {
         proxy_set_header X-Forwarded-Proto ${DOLLAR}scheme;
     }
 
->>>>>>> 92435c2ec88f069dcfd8b68ff4c6985a5e85ac99
 }
